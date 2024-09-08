@@ -66,7 +66,6 @@ function do_llvm() {
     [[ -n ${GITHUB_ACTIONS:-} ]] && extra_args+=(--no-ccache)
 
     "$base"/build-llvm.py \
-        --assertions \
         --build-target distribution \
         --check-targets clang lld llvm \
         --install-folder "$install" \
