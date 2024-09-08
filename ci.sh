@@ -30,7 +30,6 @@ function do_all() {
 function do_binutils() {
     "$base"/build-binutils.py \
         --install-folder "$install" \
-        --show-build-commands \
         --targets arm aarch64 x86_64
 }
 
