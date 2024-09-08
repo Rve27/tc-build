@@ -9,7 +9,7 @@ set -eu
 function parse_parameters() {
     while (($#)); do
         case $1 in
-            all | binutils | deps | kernel | llvm) action=$1 ;;
+            all | binutils | deps | kernel | llvm | clangversion) action=$1 ;;
             *) exit 33 ;;
         esac
         shift
@@ -20,6 +20,7 @@ function do_all() {
     do_deps
     do_llvm
     do_binutils
+    do_clangversion
     do_kernel
 }
 
@@ -106,6 +107,11 @@ function do_llvm() {
         --show-build-commands \
         --targets X86 \
         "${extra_args[@]}"
+}
+
+function do_clangversion() {
+    clang_version="$("$base"/install/bin/clang --version | head -n1 | cut -d' ' -f4)"
+    file="RvClang-$clang_version.tar.gz"
 }
 
 parse_parameters "$@"
