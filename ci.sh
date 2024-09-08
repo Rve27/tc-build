@@ -11,7 +11,7 @@ set -eu
 function parse_parameters() {
     while (($#)); do
         case $1 in
-            all | binutils | deps | kernel | llvm | clangversion | createrelease | uploadasset) action=$1 ;;
+            all | binutils | deps | llvm | clangversion | createrelease | uploadasset) action=$1 ;;
             *) exit 33 ;;
         esac
         shift
@@ -25,7 +25,6 @@ function do_all() {
     do_clangversion
     do_createrelease
     do_uploadasset
-    do_kernel
 }
 
 function do_binutils() {
@@ -60,37 +59,6 @@ function do_deps() {
         texinfo \
         xz-utils \
         zlib1g-dev
-}
-
-function do_kernel() {
-    local branch=linux-rolling-stable
-    local linux=$src/$branch
-
-    if [[ -d $linux ]]; then
-        git -C "$linux" fetch --depth=1 origin $branch
-        git -C "$linux" reset --hard FETCH_HEAD
-    else
-        git clone \
-            --branch "$branch" \
-            --depth=1 \
-            --single-branch \
-            https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
-            "$linux"
-    fi
-
-    cat <<EOF | env PYTHONPATH="$base"/tc_build python3 -
-from pathlib import Path
-
-from kernel import LLVMKernelBuilder
-
-builder = LLVMKernelBuilder()
-builder.folders.build = Path('$base/build/linux')
-builder.folders.source = Path('$linux')
-builder.matrix = {'defconfig': ['X86']}
-builder.toolchain_prefix = Path('$install')
-
-builder.build()
-EOF
 }
 
 function do_llvm() {
