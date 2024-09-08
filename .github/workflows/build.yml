@@ -20,3 +20,5 @@ jobs:
       run: bash ci.sh clangversion
     - name: Create release
       run: bash ci.sh createrelease
+    - name: Upload file
+      run: bash ci.sh uploadasset
