@@ -67,7 +67,6 @@ function do_llvm() {
 
     "$base"/build-llvm.py \
         --assertions \
-        --build-stage1-only \
         --build-target distribution \
         --check-targets clang lld llvm \
         --install-folder "$install" \
