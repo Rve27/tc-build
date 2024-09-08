@@ -155,7 +155,7 @@ function do_uploadasset() {
     curl -s --data-binary @"$file" \
         -H "Authorization: token $GITHUB_TOKEN" \
         -H "Content-Type: $(file --mime-type -b "$file")" \
-        "https://uploads.github.com/repos/$REPO_OWNER/$REPO_NAME/releases/$RELEASE_ID/assets?name=$(basename "$file")"
+        "https://uploads.github.com/repos/$repo_owner/$repo_name/releases/$RELEASE_ID/assets?name=$(basename "$file")"
 
     if [ $? -eq 0 ]; then
         echo "Asset uploaded successfully."
