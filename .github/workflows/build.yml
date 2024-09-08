@@ -18,3 +18,5 @@ jobs:
     #  run: bash ci.sh kernel
     - name: Check clang version
       run: bash ci.sh clangversion
+    - name: Create release
+      run: bash ci.sh createrelease
