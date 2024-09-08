@@ -78,6 +78,7 @@ function do_llvm() {
         --shallow-clone \
         --show-build-commands \
         --targets AArch64 ARM X86 \
+        --vendor-string "Rv" \
         "${extra_args[@]}"
 }
 
