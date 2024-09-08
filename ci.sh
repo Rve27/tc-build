@@ -77,7 +77,7 @@ function do_llvm() {
         --ref main \
         --shallow-clone \
         --show-build-commands \
-        --targets X86 \
+        --targets AArch64 ARM X86 \
         "${extra_args[@]}"
 }
 
