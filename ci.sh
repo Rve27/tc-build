@@ -2,7 +2,6 @@
 
 base=$(dirname "$(readlink -f "$0")")
 install=$base/install
-src=$base/src
 repo_owner="Rv-Trees"
 repo_name="RvClang"
 
