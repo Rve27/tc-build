@@ -31,7 +31,7 @@ function do_binutils() {
     "$base"/build-binutils.py \
         --install-folder "$install" \
         --show-build-commands \
-        --targets x86_64
+        --targets arm aarch64 x86_64
 }
 
 function do_deps() {
