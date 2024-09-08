@@ -11,7 +11,7 @@ set -eu
 function parse_parameters() {
     while (($#)); do
         case $1 in
-            all | binutils | deps | kernel | llvm | clangversion | createrelease) action=$1 ;;
+            all | binutils | deps | kernel | llvm | clangversion | createrelease | uploadasset) action=$1 ;;
             *) exit 33 ;;
         esac
         shift
@@ -24,6 +24,7 @@ function do_all() {
     do_binutils
     do_clangversion
     do_createrelease
+    do_uploadasset
     do_kernel
 }
 
@@ -145,6 +146,23 @@ function do_createrelease() {
     fi
 }
 
+function do_uploadasset() {
+    if [ -z "$RELEASE_ID" ]; then
+        echo "Release ID is missing. Cannot upload asset."
+        exit 1
+    fi
+
+    curl -s --data-binary @"$file" \
+        -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Content-Type: $(file --mime-type -b "$file")" \
+        "https://uploads.github.com/repos/$REPO_OWNER/$REPO_NAME/releases/$RELEASE_ID/assets?name=$(basename "$file")"
+
+    if [ $? -eq 0 ]; then
+        echo "Asset uploaded successfully."
+    else
+        echo "Failed to upload asset."
+    fi
+}
 
 parse_parameters "$@"
 do_"${action:=all}"
