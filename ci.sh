@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base=$(dirname "$(readlink -f "$0")")
+base="$(pwd)"
 install=$base/install
 repo_owner="Rv-Trees"
 repo_name="RvClang"
