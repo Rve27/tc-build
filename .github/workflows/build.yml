@@ -1,12 +1,19 @@
 name: Build test
 on:
   workflow_dispatch:
+    inputs:
+      GIT_TOKEN:
+        description: 'Github Token' 
+        required: true
+        default: ''
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Export
+      run: export GITHUB_TOKEN="${{ github.event.inputs.GIT_TOKEN }}"
     - name: Install dependencies
       run: bash ci.sh deps
     - name: Build LLVM
