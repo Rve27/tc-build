@@ -80,7 +80,7 @@ function do_llvm() {
 
 function do_clangversion() {
     clang_version="$("$base"/install/bin/clang --version | head -n1 | cut -d' ' -f4)"
-    file="$base/RvClang-$clang_version.tar.gz"
+    file="RvClang-$clang_version.tar.gz"
 }
 
 function do_createrelease() {
