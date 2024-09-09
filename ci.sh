@@ -84,6 +84,7 @@ function do_clangversion() {
 }
 
 function do_createrelease() {
+    do_clangversion
     TAG_NAME="RvClang-$clang_version-$(date +'%Y%m%d')"
     RELEASE_NAME="$TAG_NAME"
     RELEASE_BODY="$TAG_NAME"
