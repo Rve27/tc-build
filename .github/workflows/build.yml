@@ -1,6 +1,11 @@
 name: Build test
 on:
   workflow_dispatch:
+    inputs:
+      GIT_TOKEN:
+        description: 'Github Token' 
+        required: true
+        default: ''
 
 jobs:
   build-test:
@@ -18,6 +23,10 @@ jobs:
     - name: Check clang version
       run: bash ci.sh clangversion
     - name: Create release
-      run: bash ci.sh createrelease
+      run: |
+        export GITHUB_TOKEN="${{ github.event.inputs.GIT_TOKEN }}"
+        bash ci.sh createrelease
     - name: Upload file
-      run: bash ci.sh uploadasset
+      run: |
+        export GITHUB_TOKEN="${{ github.event.inputs.GIT_TOKEN }}"
+        bash ci.sh uploadasset
