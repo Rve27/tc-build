@@ -2,8 +2,8 @@
 
 base="$(pwd)"
 install=$base/install
-repo_owner="Rv-Trees"
-repo_name="RvClang"
+reow="Rv-Trees"
+rena="RvClang"
 
 set -eu
 
@@ -99,7 +99,7 @@ function do_createrelease() {
     RELEASE_RESPONSE=$(curl -s -X POST \
         -H "Authorization: token $GITHUB_TOKEN" \
         -d "{\"tag_name\":\"$TAG_NAME\", \"target_commitish\":\"main\", \"name\":\"$RELEASE_NAME\", \"body\":\"$RELEASE_BODY\", \"draft\":false, \"prerelease\":false}" \
-        "https://api.github.com/repos/$repo_owner/$repo_name/releases")
+        "https://api.github.com/repos/$reow/$rena/releases")
 
     RELEASE_ID=$(echo "$RELEASE_RESPONSE" | jq -r '.id')
 
@@ -121,7 +121,7 @@ function do_uploadasset() {
     if curl -s --data-binary @"$file" \
         -H "Authorization: token $GITHUB_TOKEN" \
         -H "Content-Type: $(file --mime-type -b "$file")" \
-        "https://uploads.github.com/repos/$repo_owner/$repo_name/releases/$RELEASE_ID/assets?name=$(basename "$file")"; then
+        "https://uploads.github.com/repos/$reow/$rena/releases/$RELEASE_ID/assets?name=$(basename "$file")"; then
         echo "Asset uploaded successfully."
     else
         echo "Failed to upload asset."
