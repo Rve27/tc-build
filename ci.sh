@@ -85,16 +85,23 @@ function do_clangversion() {
 
 function do_createrelease() {
     do_clangversion
-    TAG_NAME="RvClang-$clang_version-$(date +'%Y%m%d')"
+    TAG_BASE="RvClang-$clang_version-$(date +'%Y%m%d')"
+    TAG_NAME="$TAG_BASE"
+    COUNTER=1
+
+    git remote set-url origin "https://$GITHUB_TOKEN@github.com/$reow/$rena.git"
+
+    while git rev-parse "$TAG_NAME" >/dev/null 2>&1; do
+        echo "Tag $TAG_NAME already exists, trying a new one"
+        TAG_NAME="${TAG_BASE}-v$COUNTER"
+        COUNTER=$((COUNTER + 1))
+    done
+
     RELEASE_NAME="$TAG_NAME"
     RELEASE_BODY="$TAG_NAME"
 
-    if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
-        echo "Tag $TAG_NAME already exists"
-    else
-        git tag "$TAG_NAME"
-        git push origin "$TAG_NAME"
-    fi
+    git tag "$TAG_NAME"
+    git push origin "$TAG_NAME"
 
     RELEASE_RESPONSE=$(curl -s -X POST \
         -H "Authorization: token $GITHUB_TOKEN" \
