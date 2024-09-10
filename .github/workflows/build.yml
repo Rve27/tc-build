@@ -20,8 +20,6 @@ jobs:
       run: bash ci.sh binutils
     # - name: Build kernel
     #  run: bash ci.sh kernel
-    - name: Check clang version
-      run: bash ci.sh clangversion
     - name: Create release
       run: |
         export GITHUB_TOKEN="${{ github.event.inputs.GIT_TOKEN }}"
