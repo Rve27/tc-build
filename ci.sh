@@ -113,6 +113,7 @@ function do_createrelease() {
 }
 
 function do_uploadasset() {
+    do_clangversion
     if [ -z "$RELEASE_ID" ]; then
         echo "Release ID is missing. Cannot upload asset."
         exit 1
