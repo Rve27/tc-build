@@ -121,7 +121,9 @@ function do_createrelease() {
 
 function do_uploadasset() {
     do_clangversion
-    if [ -z "$RELEASE_ID" ]; then
+    git remote set-url origin "https://$GITHUB_TOKEN@github.com/$reow/$rena.git"
+    
+    if [ -z "${RELEASE_ID:-}" ]; then
         echo "Release ID is missing. Cannot upload asset."
         exit 1
     fi
@@ -133,8 +135,10 @@ function do_uploadasset() {
         echo "Asset uploaded successfully."
     else
         echo "Failed to upload asset."
+        exit 1
     fi
 }
+
 
 parse_parameters "$@"
 do_"${action:=all}"
