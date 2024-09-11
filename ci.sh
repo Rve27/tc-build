@@ -2,7 +2,7 @@
 
 base="$(pwd)"
 install=$base/install
-reow="Rv-Trees"
+reow="Rve27"
 rena="RvClang"
 
 set -eu
