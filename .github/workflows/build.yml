@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  contents: write
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
@@ -18,3 +22,15 @@ jobs:
       run: zip -r $GITHUB_WORKSPACE/RvClang-19.1.5.zip $GITHUB_WORKSPACE/RvClang/
     - name: Tar toolchain
       run: tar -czvf $GITHUB_WORKSPACE/RvClang-19.1.5.tar.gz $GITHUB_WORKSPACE/RvClang/
+    - name: Generate Changelog
+      run: echo "RvClang v19.1.5" > $GITHUB_WORKSPACE/CHANGELOG.txt
+    - name: Release toolchain
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: $GITHUB_WORKSPACE/CHANGELOG.txt
+        repository: Rv-Trees/RvClang
+        make_latest: true
+        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+        files: |
+          $GITHUB_WORKSPACE/RvClang-19.1.5.zip
+          $GITHUB_WORKSPACE/RvClang-19.1.5.tar.gz
