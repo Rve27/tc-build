@@ -26,8 +26,7 @@ function do_all() {
 function do_binutils() {
     "$base"/build-binutils.py \
         --install-folder "$install" \
-        --show-build-commands \
-        --targets x86_64
+        --targets arm aarch64 x86_64
 }
 
 function do_deps() {
@@ -93,18 +92,14 @@ function do_llvm() {
     [[ -n ${GITHUB_ACTIONS:-} ]] && extra_args+=(--no-ccache)
 
     "$base"/build-llvm.py \
-        --assertions \
-        --build-stage1-only \
-        --build-target distribution \
-        --check-targets clang lld llvm \
         --install-folder "$install" \
-        --install-target distribution \
-        --projects clang lld \
+	--build-type Release \
+	--no-update \
         --quiet-cmake \
         --ref release/19.x \
         --shallow-clone \
-        --show-build-commands \
-        --targets X86 \
+        --targets AArch64 ARM X86 \
+	--vendor-string Rv \
         "${extra_args[@]}"
 }
 
