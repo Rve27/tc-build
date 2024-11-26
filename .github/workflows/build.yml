@@ -16,3 +16,5 @@ jobs:
       run: bash ci.sh binutils
     - name: Zipping toolchain
       run: zip -r $GITHUB_WORKSPACE/RvClang-19.1.5.zip $GITHUB_WORKSPACE/RvClang/
+    - name: Tar toolchain
+      run: tar -czvf $GITHUB_WORKSPACE/RvClang-19.1.5.tar.gz $GITHUB_WORKSPACE/RvClang/
